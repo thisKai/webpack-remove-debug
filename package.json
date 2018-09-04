@@ -4,12 +4,13 @@
   "description": "Webpack loader to remove debug from your production code.",
   "main": "index.js",
   "scripts": {
+    "test": "tape ./**/*.test.js"
   },
   "keywords": [
     "webpack",
-	"debug",
+    "debug",
     "strip",
-	"remove"
+    "remove"
   ],
   "repository": {
     "type": "git",
@@ -17,9 +18,9 @@
   },
   "author": "John Godley",
   "devDependencies": {
+    "tape": "^4.9.1"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "licenses": [
     {
       "type": "MIT",
