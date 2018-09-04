@@ -70,3 +70,19 @@ test('Remove calls to es2015 imported instances', t => {
     t.assert(isOnlyWhitespace(debugStripper(input)));
     t.end();
 });
+
+test('Remove calls to named debug instances', t => {
+    const input = `
+        import createDebug from "debug";
+
+        const a = createDebug("a");
+        const b = createDebug("b");
+        const c = createDebug("c");
+
+        a("message 1");
+        b("message 2");
+        c("message 3");
+    `;
+    t.assert(isOnlyWhitespace(debugStripper(input)));
+    t.end();
+});
