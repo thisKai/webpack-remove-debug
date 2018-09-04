@@ -1,8 +1,7 @@
-const stripDebugRequire = source => source.replace( /.*?require\(\s*[\'"]debug[\'"]\s*\).*/g, '\n' );
-const stripDebugCall = source => source.replace( /.*debug\(.*?\).*/g, '\n' );
+const debugStripper = require('./debug-stripper');
 
-function debugStripper( source ) {
-    this.callback( null, stripDebugRequire( stripDebugCall( source ) ) );
+function webpackRemoveDebug( source ) {
+    this.callback( null, debugStripper( source ) );
 }
 
-module.exports = debugStripper;
+module.exports = webpackRemoveDebug;
