@@ -40,3 +40,33 @@ test('Remove calls to a debug instance named "debug"', t => {
     }
     t.end();
 });
+
+test('Remove es2015 import statements', t => {
+    const input = 'import createDebug from "debug";';
+
+    t.assert(isOnlyWhitespace(debugStripper(input)));
+    t.end();
+});
+
+test('Remove es2015 imported instances', t => {
+    const input = `
+        import createDebug from "debug";
+        const debug = createDebug("blah");
+    `;
+
+    t.assert(isOnlyWhitespace(debugStripper(input)));
+    t.end();
+});
+
+test('Remove calls to es2015 imported instances', t => {
+    const input = `
+        import createDebug from "debug";
+        const debug = createDebug("blah");
+
+        debug("message 1");
+        debug("message 2");
+        debug("message 3");
+    `;
+    t.assert(isOnlyWhitespace(debugStripper(input)));
+    t.end();
+});
