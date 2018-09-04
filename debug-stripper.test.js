@@ -1,24 +1,23 @@
 const test = require('tape');
 const debugStripper = require('./debug-stripper');
 
+const isOnlyWhitespace = input => /^\s+$/g.test(input);
+
 test('Remove require("debug")(...)', t => {
     {
         const input = 'const debug=require("debug")("namespace");';
-        const expected = '\n';
 
-        t.equal(debugStripper(input), expected);
+        t.assert(isOnlyWhitespace(debugStripper(input)));
     }
     {
         const input = 'const debug = require ( "debug" ) ( "namespace" ) ;';
-        const expected = '\n';
 
-        t.equal(debugStripper(input), expected);
+        t.assert(isOnlyWhitespace(debugStripper(input)));
     }
     {
         const input = "const debug=require('debug')('namespace');";
-        const expected = '\n';
 
-        t.equal(debugStripper(input), expected);
+        t.assert(isOnlyWhitespace(debugStripper(input)));
     }
     t.end();
 });
@@ -26,21 +25,18 @@ test('Remove require("debug")(...)', t => {
 test('Remove calls to a debug instance named "debug"', t => {
     {
         const input = 'debug("message");';
-        const expected = '\n';
 
-        t.equal(debugStripper(input), expected);
+        t.assert(isOnlyWhitespace(debugStripper(input)));
     }
     {
         const input = 'debug ( "message" ) ;';
-        const expected = '\n';
 
-        t.equal(debugStripper(input), expected);
+        t.assert(isOnlyWhitespace(debugStripper(input)));
     }
     {
         const input = "debug('message');";
-        const expected = '\n';
 
-        t.equal(debugStripper(input), expected);
+        t.assert(isOnlyWhitespace(debugStripper(input)));
     }
     t.end();
 });
