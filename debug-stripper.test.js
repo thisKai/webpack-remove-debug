@@ -1,7 +1,7 @@
 const test = require('tape');
 const debugStripper = require('./debug-stripper');
 
-const isOnlyWhitespace = input => /^\s+$/g.test(input);
+const isOnlyWhitespace = input => /^\s*$/g.test(input);
 
 test('Remove require("debug")(...)', t => {
     {
