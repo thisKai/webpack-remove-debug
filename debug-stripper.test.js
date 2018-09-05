@@ -86,3 +86,32 @@ test('Remove calls to named debug instances', t => {
     t.assert(isOnlyWhitespace(debugStripper(input)));
     t.end();
 });
+
+test('Replace enabled check with false', t => {
+    const input = `
+        import $ from 'jquery';
+        import createDebug from "debug";
+
+        const debug = createDebug("blah");
+        const a = createDebug("a");
+        const b = createDebug("b");
+        const c = createDebug("c");
+
+        debug.enabled;
+        a.enabled;
+        b.enabled;
+        c.enabled;
+    `;
+
+    const expected = `
+        import $ from 'jquery';
+
+        false;
+        false;
+        false;
+        false;
+    `;
+    t.equals(debugStripper(input), expected);
+    t.end();
+});
+
