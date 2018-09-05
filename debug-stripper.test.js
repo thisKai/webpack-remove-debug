@@ -115,3 +115,39 @@ test('Replace enabled check with false', t => {
     t.end();
 });
 
+test("Don't remove other code", t => {
+    const input = `
+        import $ from 'jquery';
+        import createDebug from "debug";
+
+        const a = createDebug("a");
+        const b = createDebug("b");
+        const c = createDebug("c");
+
+        a("message 1");
+        b("message 2");
+        c("message 3");
+
+        $(() => {
+            alert('loaded');
+        });
+
+        function blah(){
+            alert('blah');
+        }
+    `;
+
+    const expected = `
+        import $ from 'jquery';
+
+        $(() => {
+            alert('loaded');
+        });
+
+        function blah(){
+            alert('blah');
+        }
+    `;
+    t.equals(debugStripper(input), expected);
+    t.end();
+});
