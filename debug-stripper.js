@@ -26,7 +26,15 @@ const stripDebugImport = source => {
         'g',
     );
     const callsRemoved = instancesRemoved.replace(callsPattern, '');
-    return callsRemoved;
+
+    const enabledChecksPattern = new RegExp(
+        `(${instanceNames.join('|')}).enabled`,
+        'g',
+    );
+
+    const enabledChecksRemoved = callsRemoved.replace(enabledChecksPattern, 'false');
+
+    return enabledChecksRemoved;
 };
 
 module.exports = source => (
